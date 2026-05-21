@@ -4,6 +4,7 @@ from rest_framework import status
 
 from .models import UploadedFile
 from .serializers import UploadedFileSerializer
+from .services import process_uploaded_file
 
 class FileUploadAPIView(APIView):
     def post(self, request):
@@ -22,6 +23,8 @@ class FileUploadAPIView(APIView):
         )
 
         serializer = UploadedFileSerializer(file_instance)
+
+        process_uploaded_file(file_instance)
 
         return Response(
             serializer.data,
